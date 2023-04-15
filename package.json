@@ -1,7 +1,7 @@
 {
   "name": "net.samurai.showcase",
   "displayName": "Samurai.Showcase",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "unity": "2021.3",
   "description": "A simple UI system for Unity.",
   "author": {
