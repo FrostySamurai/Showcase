@@ -59,6 +59,14 @@ namespace Samurai.Showcase.Runtime
             return panel;
         }
 
+        public void Hide(Type type)
+        {
+            if (_panels.TryGetValue(type, out var panel))
+            {
+                panel.Hide();
+            }
+        }
+
         public void Hide<TData>()
         {
             Get<TData>()?.Hide();
@@ -68,6 +76,11 @@ namespace Samurai.Showcase.Runtime
 
         #region Queries
 
+        public bool IsHandled(Type type)
+        {
+            return _panels.ContainsKey(type);
+        }
+        
         public bool IsHandled<TData>()
         {
             return _panels.ContainsKey(typeof(TData));

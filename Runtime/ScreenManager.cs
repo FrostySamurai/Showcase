@@ -18,6 +18,14 @@ namespace Samurai.Showcase.Runtime
 
         #region Registration
 
+        public void Register(IEnumerable<Layer> layers)
+        {
+            foreach (var layer in layers)
+            {
+                Register(layer);
+            }
+        }
+
         public void Register(Layer layer)
         {
             if (!_registeredLayers.Add(layer))
@@ -27,6 +35,14 @@ namespace Samurai.Showcase.Runtime
             }
             
             _screenHandlers.ForEach(x => x.Register(layer));
+        }
+
+        public void Unregister(IEnumerable<Layer> layers)
+        {
+            foreach (var layer in layers)
+            {
+                Unregister(layer);
+            }
         }
 
         public void Unregister(Layer layer)

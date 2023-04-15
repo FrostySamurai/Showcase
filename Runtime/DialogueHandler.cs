@@ -102,6 +102,15 @@ namespace Samurai.Showcase.Runtime
             return dialogue;
         }
 
+        public void Hide(Type type)
+        {
+            if (_dialogues.TryGetValue(type, out var dialogueData))
+            {
+                _activeDialogues.Remove(dialogueData.LayerId);
+                dialogueData.Dialogue.Hide();
+            }
+        }
+
         public void Hide<TData>()
         {
             if (!TryGet<TData>(out var dialogueData, out var dialogue))
@@ -117,6 +126,11 @@ namespace Samurai.Showcase.Runtime
 
         #region Queries
 
+        public bool IsHandled(Type type)
+        {
+            return _dialogues.ContainsKey(type);
+        }
+        
         public bool IsHandled<TData>()
         {
             return _dialogues.ContainsKey(typeof(TData));
