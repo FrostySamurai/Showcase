@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Samurai.Showcase.Runtime.Layers;
@@ -67,6 +68,19 @@ namespace Samurai.Showcase.Runtime
             return GetHandler<TData>()?.Show<TData>();
         }
 
+        public void Hide(IEnumerable<Type> dataTypes)
+        {
+            foreach (var dataType in dataTypes)
+            {
+                Hide(dataType);
+            }
+        }
+
+        public void Hide(Type dataType)
+        {
+            GetHandler(dataType)?.Hide(dataType);
+        }
+
         public void Hide<TData>()
         {
             GetHandler<TData>()?.Hide<TData>();
@@ -95,6 +109,11 @@ namespace Samurai.Showcase.Runtime
 
         #region Private
 
+        private IScreenHandler GetHandler(Type type)
+        {
+            return _screenHandlers.FirstOrDefault(x => x.IsHandled(type));
+        }
+        
         private IScreenHandler GetHandler<TData>()
         {
             return _screenHandlers.FirstOrDefault(x => x.IsHandled<TData>());
