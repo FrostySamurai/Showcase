@@ -34,10 +34,17 @@ namespace Samurai.Showcase.Runtime
             string id = layer.LayerId;
             foreach (var screen in layer.Screens)
             {
+                if (_dialogues.ContainsKey(screen.DataType))
+                {
+                    Debug.LogWarning($"Multiple dialogues found for data type '{screen.DataType.FullName}'. Skipping..");
+                    continue;
+                }
+                
                 if (screen is not IDialogue dialogue)
                 {
                     continue;
                 }
+                
                 _dialogues[screen.DataType] = new DialogueData(id, dialogue);
                 if (!dialogue.IsActive)
                 {

@@ -14,13 +14,13 @@ namespace Samurai.Showcase.Runtime
             new DialogueHandler()
         };
         
-        private readonly HashSet<string> _registeredLayers = new();
+        private readonly HashSet<Layer> _registeredLayers = new();
 
         #region Registration
 
         public void Register(Layer layer)
         {
-            if (!_registeredLayers.Add(layer.LayerId))
+            if (!_registeredLayers.Add(layer))
             {
                 Debug.LogWarning($"[ScreenManager] Layer with id '{layer.LayerId}' is already registered. Skipping..");
                 return;
@@ -31,11 +31,10 @@ namespace Samurai.Showcase.Runtime
 
         public void Unregister(Layer layer)
         {
-            if (_registeredLayers.Remove(layer.LayerId))
+            if (_registeredLayers.Remove(layer))
             {
                 _screenHandlers.ForEach(x => x.Unregister(layer));
             }
-            
         }
 
         #endregion Registration

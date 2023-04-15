@@ -16,6 +16,12 @@ namespace Samurai.Showcase.Runtime
         {
             foreach (var screen in layer.Screens)
             {
+                if (_panels.ContainsKey(screen.DataType))
+                {
+                    Debug.LogWarning($"Multiple panels found for data type '{screen.DataType.FullName}'. Skipping..");
+                    continue;
+                }
+                
                 if (screen is IPanel panel)
                 {
                     _panels[screen.DataType] = panel;
