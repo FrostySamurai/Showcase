@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Samurai.Showcase.Runtime.Layers;
 using Samurai.Showcase.Runtime.Screens;
 using UnityEngine;
+using Screen = Samurai.Showcase.Runtime.Screens.Screen;
 
 namespace Samurai.Showcase.Runtime
 {
-    public class PanelHandler : IScreenHandler
+    public class WindowHandler : IScreenHandler
     {
-        private readonly Dictionary<Type, IPanel> _panels = new();
+        private readonly Dictionary<Type, Screen> _windows = new();
 
         #region Registration
 
@@ -16,15 +17,15 @@ namespace Samurai.Showcase.Runtime
         {
             foreach (var screen in layer.Screens)
             {
-                if (_panels.ContainsKey(screen.DataType))
+                if (_windows.ContainsKey(screen.DataType))
                 {
                     Debug.LogWarning($"Multiple panels found for data type '{screen.DataType.FullName}'. Skipping..");
                     continue;
                 }
                 
-                if (screen is IPanel panel)
+                if (screen is IWindow)
                 {
-                    _panels[screen.DataType] = panel;
+                    _windows[screen.DataType] = screen;
                 }
             }
         }
@@ -33,9 +34,9 @@ namespace Samurai.Showcase.Runtime
         {
             foreach (var screen in layer.Screens)
             {
-                if (screen is IPanel)
+                if (screen is IWindow)
                 {
-                    _panels.Remove(screen.DataType);
+                    _windows.Remove(screen.DataType);
                 }
             }
         }
@@ -61,7 +62,7 @@ namespace Samurai.Showcase.Runtime
 
         public void Hide(Type type)
         {
-            if (_panels.TryGetValue(type, out var panel))
+            if (_windows.TryGetValue(type, out var panel))
             {
                 panel.Hide();
             }
@@ -78,12 +79,12 @@ namespace Samurai.Showcase.Runtime
 
         public bool IsHandled(Type type)
         {
-            return _panels.ContainsKey(type);
+            return _windows.ContainsKey(type);
         }
         
         public bool IsHandled<TData>()
         {
-            return _panels.ContainsKey(typeof(TData));
+            return _windows.ContainsKey(typeof(TData));
         }
 
         public bool IsActive<TData>()
@@ -93,12 +94,12 @@ namespace Samurai.Showcase.Runtime
 
         public Screen<TData> Get<TData>()
         {
-            return _panels.TryGetValue(typeof(TData), out var panel) ? panel as Screen<TData> : null;
+            return _windows.TryGetValue(typeof(TData), out var panel) ? panel as Screen<TData> : null;
         }
 
         public TScreen Get<TScreen, TData>() where TScreen : Screen<TData>
         {
-            return _panels.TryGetValue(typeof(TData), out var panel) ? panel as TScreen : null;
+            return _windows.TryGetValue(typeof(TData), out var panel) ? panel as TScreen : null;
         }
 
         #endregion Queries

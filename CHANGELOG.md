@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.5] - 2023-04-23
+
+### Changed
+- Instead of overriding Init, Hide and Show directly, there are now parameterless variants OnInit, OnHide, OnShow
+- Panels are now called Windwos
+
 ## [0.0.4] - 2023-04-16
 
 ### Fixed

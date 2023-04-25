@@ -14,16 +14,14 @@ namespace Samurai.Showcase.Example.Scripts.Panels
         }
     }
     
-    public class ManaPanel : Panel<ManaPanelParameters>
+    public class ManaWindow : Window<ManaPanelParameters>
     {
         [SerializeField]
         private Text _text;
-
-        public override void Init(ManaPanelParameters parameters)
+        
+        protected override void OnInit()
         {
-            base.Init(parameters);
-
-            _text.text = parameters.Mana.ToString();
+            _text.text = Parameters.Mana.ToString();
         }
     }
 }

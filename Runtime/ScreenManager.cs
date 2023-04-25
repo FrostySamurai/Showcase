@@ -11,7 +11,7 @@ namespace Samurai.Showcase.Runtime
     {
         private readonly List<IScreenHandler> _screenHandlers = new()
         {
-            new PanelHandler(),
+            new WindowHandler(),
             new DialogueHandler()
         };
         

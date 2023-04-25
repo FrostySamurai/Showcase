@@ -13,26 +13,20 @@ Class through which the entire screen system can be accessed.
 
 ### Screen Initialization & Lifecycle
 
-When overriding relevant lifecycle functions it is important to still call base implementation.
 ```csharp
-public override void Init(SomeDialogueParameters parameters)
+// parameters can be accessed through Parameters property
+public override void OnInit()
 {
-	base.Init(parameters);
-
 	// do stuff
 }
 
-public override void Show()
+public override void OnShow()
 {
-	base.Show();
-
 	// do stuff
 }
 
-public override void Hide()
+public override void OnHide()
 {
-	base.Hide();
-
 	// do stuff
 }
 ```
@@ -46,7 +40,7 @@ _screenManager.Hide<SomeDialogueParameters>();
 ### Dialogue Screen
 A part of UI (for example a popup window) where only one of these elements can be visible in any given layer. If a dialogue is shown while other dialogue in the same layer is active, the other dialogue will be hidden.
 
-### Panel Screen
+### Window Screen
 A part of UI where any number of these can be visible at any given time, regardless of layer they are within.
 
 ### Layer Registration

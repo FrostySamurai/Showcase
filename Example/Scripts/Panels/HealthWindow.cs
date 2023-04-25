@@ -14,16 +14,14 @@ namespace Samurai.Showcase.Example.Scripts.Panels
         }
     }
     
-    public class HealthPanel : Panel<HealthPanelParameters>
+    public class HealthWindow : Window<HealthPanelParameters>
     {
         [SerializeField]
         private Text _text;
-        
-        public override void Init(HealthPanelParameters parameters)
-        {
-            base.Init(parameters);
 
-            _text.text = parameters.Health.ToString();
+        protected override void OnInit()
+        {
+            _text.text = Parameters.Health.ToString();
         }
     }
 }

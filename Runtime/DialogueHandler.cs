@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Samurai.Showcase.Runtime.Layers;
 using Samurai.Showcase.Runtime.Screens;
 using UnityEngine;
+using Screen = Samurai.Showcase.Runtime.Screens.Screen;
 
 namespace Samurai.Showcase.Runtime
 {
@@ -13,9 +14,9 @@ namespace Samurai.Showcase.Runtime
         private struct DialogueData
         {
             public string LayerId;
-            public IDialogue Dialogue;
+            public Screen Dialogue;
 
-            public DialogueData(string layerId, IDialogue dialogue)
+            public DialogueData(string layerId, Screen dialogue)
             {
                 LayerId = layerId;
                 Dialogue = dialogue;
@@ -24,7 +25,7 @@ namespace Samurai.Showcase.Runtime
 
         #endregion Inner Types
         
-        private readonly Dictionary<string, IDialogue> _activeDialogues = new();
+        private readonly Dictionary<string, Screen> _activeDialogues = new();
         private readonly Dictionary<Type, DialogueData> _dialogues = new();
 
         #region Registration
@@ -44,20 +45,20 @@ namespace Samurai.Showcase.Runtime
                 {
                     continue;
                 }
-                
-                _dialogues[screen.DataType] = new DialogueData(id, dialogue);
-                if (!dialogue.IsActive)
+
+                _dialogues[screen.DataType] = new DialogueData(id, screen);
+                if (!screen.IsActive)
                 {
                     continue;
                 }
 
                 if (_activeDialogues.ContainsKey(id))
                 {
-                    dialogue.Hide();
+                    screen.Hide();
                     continue;
                 }
 
-                _activeDialogues[id] = dialogue;
+                _activeDialogues[id] = screen;
             }
         }
 

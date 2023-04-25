@@ -12,7 +12,7 @@ namespace Samurai.Showcase.Example.Scripts.Panels
         
     }
 
-    public class ControlsPanel : Panel<ControlsPanelParameters>
+    public class ControlsWindow : Window<ControlsPanelParameters>
 
     {
     [SerializeField]

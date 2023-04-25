@@ -8,26 +8,37 @@ namespace Samurai.Showcase.Runtime.Screens
         public bool IsActive => gameObject.activeSelf;
         public abstract Type DataType { get; }
         
-        public virtual void Show()
+        internal void Show()
         {
             this.SetActive(true);
+            
+            OnShow();
         }
 
-        public virtual void Hide()
+        internal void Hide()
         {
             this.SetActive(false);
+            
+            OnHide();
         }
+        
+        protected virtual void OnShow() {}
+        protected virtual void OnHide() {}
     }
     
     public abstract class Screen<TData> : Screen
     {
-        protected TData Parameters;
+        private TData _parameters;
+        protected TData Parameters => _parameters;
 
         public override Type DataType => typeof(TData);
 
-        public virtual void Init(TData parameters)
+        public void Init(TData parameters)
         {
-            Parameters = parameters;
+            _parameters = parameters;
+            OnInit();
         }
+
+        protected virtual void OnInit() {}
     }
 }
